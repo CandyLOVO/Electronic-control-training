@@ -47,10 +47,15 @@ void qe();
 				pid_init(&supercap_pid, superpid, 3000, 3000); //init pid parameter, kp=40, ki=3, kd=0, output limit = 16384			
 
   
+		float vx = rc_ctrl.rc.ch[1] - 0; //待定 Debug
+		float vy = rc_ctrl.rc.ch[0] - 0;
+		float w = rc_ctrl.rc.ch[3] - 0;
+		float target[4] = {0};
     for(;;)				//底盘运动任务
-    {     
- 					
-            osDelay(1);
+    {
+			//直行
+			
+			osDelay(1);
 
     }
 
