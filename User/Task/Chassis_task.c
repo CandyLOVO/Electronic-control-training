@@ -36,7 +36,10 @@ void qe();
 	
 #define angle_valve 5
 #define angle_weight 55
- 
+#ifndef RADIAN_COEF
+	#define RADIAN_COEF 57.3f //180/pi
+#endif
+
    void Chassis_task(void const *pvParameters)
 {
  			       for (uint8_t i = 0; i < 4; i++)
@@ -47,14 +50,19 @@ void qe();
 				pid_init(&supercap_pid, superpid, 3000, 3000); //init pid parameter, kp=40, ki=3, kd=0, output limit = 16384			
 
   
-		float vx = rc_ctrl.rc.ch[1] - 0; //待定 Debug
-		float vy = rc_ctrl.rc.ch[0] - 0;
-		float w = rc_ctrl.rc.ch[3] - 0;
-		float target[4] = {0};
+		float vx = rc_ctrl.rc.ch[0]; //右拨杆初始0 向左-548 向右556 vy[-1024,-1016] 左右
+		float vy = rc_ctrl.rc.ch[1]; //右拨杆初始-1023 向上393 向下-391 前后
+		float w = rc_ctrl.rc.ch[4]; //滚动初始2048 向上-548 向下2604
+		float wheel_rpm[4] = {0.f};
+		static float rotate_ratio_fr; //右前 1
+		static float rotate_ratio_fl; //左前 2
+		static float rotate_ratio_bl; //左后 3
+		static float rotate_ratio_br; //右后 4
+		float wheelbase; //轮距
+		float wheeltrack; //轴距
     for(;;)				//底盘运动任务
     {
-			//直行
-			
+			rotate_ratio_fr = ((wheelbase + wheeltrack))
 			osDelay(1);
 
     }
