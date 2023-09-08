@@ -54,6 +54,8 @@ void qe();
 		float vy = rc_ctrl.rc.ch[1]; //右拨杆初始-1023 向上393 向下-391 前后
 		float w = rc_ctrl.rc.ch[4]; //滚动初始2048 向上-548 向下2604
 		float wheel_rpm[4] = {0.f}; //各轮子速度
+		float wheel_rpm_ratio; //速度转换成电机内部转子转速
+		float wheel_c; //轮子周长
     for(;;)				//底盘运动任务
     {
 			wheel_rpm[0] = -vx + vy + w / RADIAN_COEF; //转换为rad/s
@@ -61,6 +63,7 @@ void qe();
 			wheel_rpm[2] = -vx + vy - w / RADIAN_COEF;
 			wheel_rpm[3] = vx + vy + w / RADIAN_COEF;
 			//将轮子速度转换为电机内转子速度
+			//LH说忽略:(
 			
 			osDelay(1);
 
