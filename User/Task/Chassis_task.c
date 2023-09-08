@@ -56,14 +56,24 @@ void qe();
 		float wheel_rpm[4] = {0.f}; //各轮子速度
 		float wheel_rpm_ratio; //速度转换成电机内部转子转速
 		float wheel_c; //轮子周长
+		float speed_Max = 200; //限速
     for(;;)				//底盘运动任务
     {
-			wheel_rpm[0] = -vx + vy + w / RADIAN_COEF; //转换为rad/s
-			wheel_rpm[1] = vx + vy - w / RADIAN_COEF;
-			wheel_rpm[2] = -vx + vy - w / RADIAN_COEF;
-			wheel_rpm[3] = vx + vy + w / RADIAN_COEF;
+			//计算各轮子速度
+			wheel_rpm[0] = -vx + vy + w / RADIAN_COEF; //右前 //转换为rad/s
+			wheel_rpm[1] = vx + vy - w / RADIAN_COEF; //左前
+			wheel_rpm[2] = -vx + vy - w / RADIAN_COEF; //左后
+			wheel_rpm[3] = vx + vy + w / RADIAN_COEF; //右后
 			//将轮子速度转换为电机内转子速度
 			//LH说忽略:(
+			
+			//功率限制
+			float max = wheel_rpm[0];
+			for(int i=1;i<=3;i++){
+				if(wheel_rpm[i]>max){
+					max = wheel_rpm[i];
+				}
+			}
 			
 			osDelay(1);
 
