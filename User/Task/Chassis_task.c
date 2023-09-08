@@ -53,16 +53,15 @@ void qe();
 		float vx = rc_ctrl.rc.ch[0]; //右拨杆初始0 向左-548 向右556 vy[-1024,-1016] 左右
 		float vy = rc_ctrl.rc.ch[1]; //右拨杆初始-1023 向上393 向下-391 前后
 		float w = rc_ctrl.rc.ch[4]; //滚动初始2048 向上-548 向下2604
-		float wheel_rpm[4] = {0.f};
-		static float rotate_ratio_fr; //右前 1
-		static float rotate_ratio_fl; //左前 2
-		static float rotate_ratio_bl; //左后 3
-		static float rotate_ratio_br; //右后 4
-		float wheelbase; //轮距
-		float wheeltrack; //轴距
+		float wheel_rpm[4] = {0.f}; //各轮子速度
     for(;;)				//底盘运动任务
     {
-			rotate_ratio_fr = ((wheelbase + wheeltrack))
+			wheel_rpm[0] = -vx + vy + w / RADIAN_COEF; //转换为rad/s
+			wheel_rpm[1] = vx + vy - w / RADIAN_COEF;
+			wheel_rpm[2] = -vx + vy - w / RADIAN_COEF;
+			wheel_rpm[3] = vx + vy + w / RADIAN_COEF;
+			//将轮子速度转换为电机内转子速度
+			
 			osDelay(1);
 
     }
