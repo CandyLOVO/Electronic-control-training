@@ -42,38 +42,64 @@ void qe();
 
    void Chassis_task(void const *pvParameters)
 {
- 			       for (uint8_t i = 0; i < 4; i++)
+ 			for (uint8_t i = 0; i < 4; i++)
 			{
         pid_init(&motor_pid_chassis[i], chassis_motor_pid, 6000, 6000); //init pid parameter, kp=40, ki=3, kd=0, output limit = 16384
 				
 			} 
+			//超级电容
 				pid_init(&supercap_pid, superpid, 3000, 3000); //init pid parameter, kp=40, ki=3, kd=0, output limit = 16384			
 
   
 		float vx = rc_ctrl.rc.ch[0]; //右拨杆初始0 向左-548 向右556 vy[-1024,-1016] 左右
 		float vy = rc_ctrl.rc.ch[1]; //右拨杆初始-1023 向上393 向下-391 前后
-		float w = rc_ctrl.rc.ch[4]; //滚动初始2048 向上-548 向下2604
-		float wheel_rpm[4] = {0.f}; //各轮子速度
+		float w = rc_ctrl.rc.ch[4] - 1576; //滚动初始2048 向上-548 向下2604
+			//说好的解码后数据是364~1684呢??? :(
+		float wheel_rpm[4]; //各轮子速度
 		float wheel_rpm_ratio; //速度转换成电机内部转子转速
 		float wheel_c; //轮子周长
-		float speed_Max = 200; //限速
+		float speed_Max = 300; //限速 3508最大转速480rpm
+		float pid_out[4]; //输出电流
+		//处理摇杆值
+		if(vy==-1023)
+			vy = 0;
+		if(w==(2048-1576))
+			w = 0;
+		vx = 480 / 556 * vx; //映射到最大转速
+		vy = 480 / 393 * vy;
+		w = 480 / 1028 * w;
+		
     for(;;)				//底盘运动任务
-    {
+    {		
 			//计算各轮子速度
 			wheel_rpm[0] = -vx + vy + w / RADIAN_COEF; //右前 //转换为rad/s
 			wheel_rpm[1] = vx + vy - w / RADIAN_COEF; //左前
 			wheel_rpm[2] = -vx + vy - w / RADIAN_COEF; //左后
 			wheel_rpm[3] = vx + vy + w / RADIAN_COEF; //右后
 			//将轮子速度转换为电机内转子速度
-			//LH说忽略:(
+			//LH说忽略 :(
 			
 			//功率限制
 			float max = wheel_rpm[0];
 			for(int i=1;i<=3;i++){
 				if(wheel_rpm[i]>max){
-					max = wheel_rpm[i];
+					max = fabs(wheel_rpm[i]);
 				}
 			}
+			if(max > speed_Max){
+				float rate = speed_Max / max;
+				for(int i=0;i<=3;i++){
+					wheel_rpm[i] *= rate;
+				}
+			}
+			
+			//PID速度控制 将速度转化为电流值
+			for(int i=0;i<=3;i++){
+				pid_out[i] = pid_calc(&motor_pid_chassis[i],motor_info_chassis[i].rotor_speed ,wheel_rpm[i]);
+			}
+			
+			//控制电机
+				set_motor_current_can2(0,pid_out[0],pid_out[1],pid_out[2],pid_out[3]);
 			
 			osDelay(1);
 
