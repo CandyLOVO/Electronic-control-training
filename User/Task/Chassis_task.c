@@ -3,19 +3,26 @@
 #include "INS_task.h"
 #include "exchange.h"
 #include "drv_can.h"
-#include "drv_usart.h"
+
 pid_struct_t motor_pid_chassis[4];
 pid_struct_t supercap_pid;
 motor_info_t  motor_info_chassis[8];       //电机信息结构体
  fp32 chassis_motor_pid [3]={30,0.5,10};   //用的原来的pid
  fp32 superpid[3] = {120,0.1,0};
 volatile int16_t Vx=0,Vy=0,Wz=0;
-float vx=0, vy=0, wz=0;
+volatile int16_t m = 100;
+volatile int16_t vx=0, vy=0, wz=0;
+uint16_t wheel_rpm[4]; //各轮子速度
+float speed_Max = 10000; //限速 3508最大转速480rpm
+float pid_out[4]; //输出电流
+                           
 int16_t Temp_Vx;
 int16_t Temp_Vy;
 int fllowflag = 0;
 volatile int16_t motor_speed_target[4];
  extern RC_ctrl_t rc_ctrl; //声明遥控器数据结构体
+ uint8_t sbus_rx_buffer[18]; //声明遥控器缓存数组
+
  extern ins_data_t ins_data;
  extern float powerdata[4];
  extern uint16_t shift_flag;
@@ -38,10 +45,8 @@ void qe();
 
 #define angle_valve 5
 #define angle_weight 55
-#ifndef RADIAN_COEF
-	#define RADIAN_COEF 57.3f //180/pi
-#endif
-	
+uint16_t RADIAN_COEF = 57.3; //180/pi
+
    void Chassis_task(void const *pvParameters)
 	{
  			for (uint8_t i = 0; i < 4; i++)
@@ -49,38 +54,32 @@ void qe();
         pid_init(&motor_pid_chassis[i], chassis_motor_pid, 6000, 6000); //init pid parameter, kp=40, ki=3, kd=0, output limit = 16384
 			} 
 			//超级电容
-				pid_init(&supercap_pid, superpid, 3000, 3000); //init pid parameter, kp=40, ki=3, kd=0, output limit = 16384			
-		
-		uint8_t rxBuf[18];
-		HAL_UART_Receive_DMA(&huart3,rxBuf,18);//初始化DMA
-		__HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);//IDLE 中断使能
-    CAN2_Init();
-		USART3_Init();
-			
-		float wheel_rpm[4]; //各轮子速度
-		float speed_Max = 10000; //限速 3508最大转速480rpm
-		float pid_out[4]; //输出电流
-		
+				pid_init(&supercap_pid, superpid, 3000, 3000); //init pid parameter, kp=40, ki=3, kd=0, output limit = 16384	
+			for	(int i=0;i<4;i++){
+				motor_info_chassis[i].can_id = 1 + i;	
+			}
+			hcan2.Instance = CAN2;
+			CAN2_Init();
+			HAL_UART_Receive_DMA(&huart3,sbus_rx_buffer,18);
 			
     for(;;)				//底盘运动任务
     {	
-			osDelay(1);
-			__HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE); 
-			vx = rc_ctrl.rc.ch[0] * 100; //右拨杆初始0 向左-548 向右556 vy[-1024,-1016] 左右
-			vy = rc_ctrl.rc.ch[1] * 100; //右拨杆初始-1023 向上393 向下-391 前后
-			wz = rc_ctrl.rc.ch[4]; //滚动初始10972 向上-548 向下2604
-//			if(vy==-1023)
-//				vy = 0;
-//			if(wz==(2048-1576))
-//				wz = 0;
-//			vx = 480 / 556 * vx; //映射到最大转速
-//			vy = 480 / 393 * vy;
-//			wz = 480 / 1028 * wz;
-			//计算各轮子速度
-			wheel_rpm[0] = -(-vx + vy + wz / RADIAN_COEF); //右前 //转换为rad/s
-			wheel_rpm[1] = vx + vy - wz / RADIAN_COEF; //左前
-			wheel_rpm[2] = -vx + vy - wz / RADIAN_COEF; //左后
-			wheel_rpm[3] = -(vx + vy + wz / RADIAN_COEF); //右后
+			osDelay(1);                                                                                                                          
+//			rc_ctrl.rc.ch[0] = rc_ctrl.rc.ch[0]; //右拨杆初始0 向左-548 向右556 vy[-1024,-1016] 左右
+//			rc_ctrl.rc.ch[1] = rc_ctrl.rc.ch[1]; //右拨杆初始-1023 向上393 向下-391 前后
+//			rc_ctrl.rc.ch[4] = rc_ctrl.rc.ch[4]; //滚动初始10972 向上-548 向下2604
+//			if(rc_ctrl.rc.ch[1]==-1023)
+//				rc_ctrl.rc.ch[1] = 0;
+//			if(rc_ctrl.rc.ch[4]==(2048-1576))
+//				rc_ctrl.rc.ch[4] = 0;
+//			rc_ctrl.rc.ch[0] = 480 / 556 * rc_ctrl.rc.ch[0]; //映射到最大转速
+//			rc_ctrl.rc.ch[1] = 480 / 393 * rc_ctrl.rc.ch[1];
+//			rc_ctrl.rc.ch[4] = 480 / 1028 * rc_ctrl.rc.ch[4];
+			//计算各轮子速度 
+			wheel_rpm[0] = -(-rc_ctrl.rc.ch[0] + rc_ctrl.rc.ch[1] + rc_ctrl.rc.ch[4] / RADIAN_COEF); //右前 //转换为rad/s
+			wheel_rpm[1] = rc_ctrl.rc.ch[0] + rc_ctrl.rc.ch[1] - rc_ctrl.rc.ch[4] / RADIAN_COEF; //左前
+			wheel_rpm[2] = -rc_ctrl.rc.ch[0] + rc_ctrl.rc.ch[1] - rc_ctrl.rc.ch[4] / RADIAN_COEF; //左后
+			wheel_rpm[3] = -(rc_ctrl.rc.ch[0] + rc_ctrl.rc.ch[1] + rc_ctrl.rc.ch[4] / RADIAN_COEF); //右后
 			//将轮子速度转换为电机内转子速度
 			//LH说忽略 :(
 			
