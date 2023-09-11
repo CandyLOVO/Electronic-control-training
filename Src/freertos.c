@@ -131,9 +131,9 @@ void MX_FREERTOS_Init(void) {
   /* definition and creation of INSTask */
   osThreadDef(INSTask, StartINSTask, osPriorityNormal, 0, 1024);//20000+
   INSTaskHandle = osThreadCreate(osThread(INSTask), NULL);
-
-
-
+	
+	osThreadDef(Receive, Chassis_task, osPriorityIdle, 0, 1024);
+  Chassis_taskHandle = osThreadCreate(osThread(Receive), NULL);
   /* USER CODE BEGIN RTOS_THREADS */
     /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
