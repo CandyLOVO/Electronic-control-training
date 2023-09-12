@@ -45,7 +45,7 @@ uint16_t b_flag;
     rc_ctrl.mouse.press_l = rxBuf[12];                                  //!< Mouse Left Is Press ?
     rc_ctrl.mouse.press_r = rxBuf[13];                                  //!< Mouse Right Is Press ?
     rc_ctrl.key.v = rxBuf[14] | (rxBuf[15] << 8);                    //!< KeyBoard value	
-    rc_ctrl.rc.ch[4] = rxBuf[16] | (rxBuf[17] << 8);                 //NULL
+    rc_ctrl.rc.ch[4] = (rxBuf[16] | (rxBuf[17] << 8)) & 0x07FF;                 //NULL
 
     rc_ctrl.rc.ch[0]-=RC_CH_VALUE_OFFSET;
     rc_ctrl.rc.ch[1]-=RC_CH_VALUE_OFFSET;

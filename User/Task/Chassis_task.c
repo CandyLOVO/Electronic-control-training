@@ -9,8 +9,8 @@ pid_struct_t supercap_pid;
 motor_info_t  motor_info_chassis[8];       //电机信息结构体
  fp32 chassis_motor_pid [3]={30,0.5,10};   //用的原来的pid
  fp32 superpid[3] = {120,0.1,0};
-volatile int16_t Vx=0,Vy=0,Wz=0;
 
+volatile int16_t Vx=0,Vy=0,Wz=0;
 volatile float wheel_rpm[4]; //各轮子速度
 float speed_Max = 10000; //限速 3508最大转速480rpm
 float pid_out[4]; //输出电流
@@ -54,6 +54,7 @@ float RADIAN_COEF = 57.3; //180/pi
 			} 
 			//超级电容
 				pid_init(&supercap_pid, superpid, 3000, 3000); //init pid parameter, kp=40, ki=3, kd=0, output limit = 16384	
+			
 			for	(int i=0;i<4;i++){
 				motor_info_chassis[i].can_id = 0x201 + i;	
 			}
@@ -63,13 +64,7 @@ float RADIAN_COEF = 57.3; //180/pi
 			Vx = rc_ctrl.rc.ch[0]; //右拨杆初始0 向左-548 向右556 vy[-1024,-1016] 左右
 			Vy = rc_ctrl.rc.ch[1]; //右拨杆初始-1023 向上393 向下-391 前后
 			Wz = rc_ctrl.rc.ch[4]; //滚动初始10972 向上-548 向下2604
-			if(Vy==-1023)
-				Vy = 0;
-			if(Wz==10972)
-				Wz = 0;
-//			Vx = 10000 / 556 * Vx; //映射到最大转速
-//			Vy = 10000 / 393 * Vy;
-//			Wz = 10000 / 1028 * Wz;
+
 			//计算各轮子速度 
 			wheel_rpm[0] = -(-Vx + Vy + Wz / RADIAN_COEF); //右前 //转换为rad/s
 			wheel_rpm[1] = Vx + Vy - Wz / RADIAN_COEF; //左前
@@ -103,7 +98,16 @@ float RADIAN_COEF = 57.3; //180/pi
 			osDelay(1); 
     }
 	}
-
+//处理遥控器数据 //控制信号归一化
+float rc_convert(float get, float max_abs, float dead_limit)
+{
+	float proportion;
+	if(get > dead_limit)
+	{
+		proportion = (get - dead_limit) / (max_abs - dead_limit);
+	}
+	else if
+}
 
 
 

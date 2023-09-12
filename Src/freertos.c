@@ -132,8 +132,9 @@ void MX_FREERTOS_Init(void) {
   osThreadDef(INSTask, StartINSTask, osPriorityNormal, 0, 1024);//20000+
   INSTaskHandle = osThreadCreate(osThread(INSTask), NULL);
 	
-	osThreadDef(Receive, Chassis_task, osPriorityIdle, 0, 1024);
-  Chassis_taskHandle = osThreadCreate(osThread(Receive), NULL);
+	//创建底盘控制任务函数
+	osThreadDef(Receive, Chassis_task, osPriorityIdle, 0, 1024); //任务名 函数指针指向的任务函数 任务优先级 传参数 堆栈大小
+  Chassis_taskHandle = osThreadCreate(osThread(Receive), NULL); //指向所定义的结构体变量的指针 传给线程函数的参数
   /* USER CODE BEGIN RTOS_THREADS */
     /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
