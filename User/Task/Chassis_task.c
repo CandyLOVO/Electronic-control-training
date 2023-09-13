@@ -12,7 +12,7 @@ motor_info_t  motor_info_chassis[8];       //电机信息结构体
 
 volatile int16_t Vx=0,Vy=0,Wz=0;
 volatile float wheel_rpm[4]; //各轮子速度
-float speed_Max = 10000; //限速 3508最大转速480rpm
+float speed_Max = 1000; //限速 3508最大转速480rpm
 float pid_out[4]; //输出电流
                            
 int16_t Temp_Vx;
@@ -44,8 +44,9 @@ void qe();
 
 #define angle_valve 5
 #define angle_weight 55
-float RADIAN_COEF = 57.3; //180/pi
-
+#define RADIAN_COEF 57.3 //180/pi
+float rc_convert(float get, float max, float dead_limit);
+	
    void Chassis_task(void const *pvParameters)
 	{
  			for (uint8_t i = 0; i < 4; i++)
@@ -55,33 +56,37 @@ float RADIAN_COEF = 57.3; //180/pi
 			//超级电容
 				pid_init(&supercap_pid, superpid, 3000, 3000); //init pid parameter, kp=40, ki=3, kd=0, output limit = 16384	
 			
-			for	(int i=0;i<4;i++){
-				motor_info_chassis[i].can_id = 0x201 + i;	
-			}
-			
     for(;;)				//底盘运动任务
     {	                                                                                                                         
 			Vx = rc_ctrl.rc.ch[0]; //右拨杆初始0 向左-548 向右556 vy[-1024,-1016] 左右
 			Vy = rc_ctrl.rc.ch[1]; //右拨杆初始-1023 向上393 向下-391 前后
-			Wz = rc_ctrl.rc.ch[4]; //滚动初始10972 向上-548 向下2604
+			Wz = rc_ctrl.rc.ch[4]; //滚动初始0 向上732 向下556
 
+			if(Vy==-1023){
+				Vy = 0;
+			}
+			
+			Vx = rc_convert(Vx,556,500);
+			Vy = rc_convert(Vy,393,300);
+//			Wz = speed_Max * rc_convert(Wz,732,500);                   
+			
 			//计算各轮子速度 
-			wheel_rpm[0] = -(-Vx + Vy + Wz / RADIAN_COEF); //右前 //转换为rad/s
-			wheel_rpm[1] = Vx + Vy - Wz / RADIAN_COEF; //左前
-			wheel_rpm[2] = -Vx + Vy - Wz / RADIAN_COEF; //左后
-			wheel_rpm[3] = -(Vx + Vy + Wz / RADIAN_COEF); //右后
+			wheel_rpm[0] = -Vx + Vy + Wz; //右前 //转换为rad/s
+			wheel_rpm[1] = -(Vx + Vy - Wz); //左前
+			wheel_rpm[2] = -(- Vx + Vy - Wz); //左后
+			wheel_rpm[3] = Vx + Vy + Wz; //右后
 			//将轮子速度转换为电机内转子速度
 			//LH说忽略 :(
 			
 			//功率限制
 			float max = wheel_rpm[0];
 			for(int i=1;i<=3;i++){
-				if(wheel_rpm[i]>max){
-					max = fabs(wheel_rpm[i]);
+				if(fabs(wheel_rpm[i])>fabs(max)){
+					max = wheel_rpm[i];
 				}
 			}
-			if(max > speed_Max){
-				float rate = speed_Max / max;
+			if(fabs(max) > speed_Max){
+				float rate = speed_Max / fabs(max);
 				for(int i=0;i<=3;i++){
 					wheel_rpm[i] *= rate;
 				}
@@ -99,14 +104,23 @@ float RADIAN_COEF = 57.3; //180/pi
     }
 	}
 //处理遥控器数据 //控制信号归一化
-float rc_convert(float get, float max_abs, float dead_limit)
+float rc_convert(float get, float max, float dead_limit)
 {
 	float proportion;
+	float limit;
 	if(get > dead_limit)
 	{
-		proportion = (get - dead_limit) / (max_abs - dead_limit);
+		proportion = (get - dead_limit) / (max - dead_limit);
+		limit = speed_Max;
 	}
-	else if
+	else if(get < -dead_limit)
+	{
+		proportion = (-dead_limit - get) / (-dead_limit + max);
+		limit = -speed_Max;
+	}
+	else
+		proportion = 0;
+	return proportion * limit;
 }
 
 
