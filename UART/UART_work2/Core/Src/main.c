@@ -154,9 +154,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle)
 {
 	if(UartHandle->Instance == USART1)
 	{
-		
 		HAL_UART_Transmit_IT(&huart1,send,sizeof(send));
 		HAL_UART_Receive_IT(&huart1,receive,sizeof(receive));
+		HAL_GPIO_TogglePin(LED_G_GPIO_Port,LED_G_Pin);
 	}
 }
 /* USER CODE END 4 */
