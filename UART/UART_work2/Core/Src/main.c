@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "stdio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,7 +44,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+uint8_t receive[4];
+uint8_t send[] = "OK!!";
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -88,7 +89,7 @@ int main(void)
   MX_GPIO_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-
+	HAL_UART_Receive_IT(&huart1,receive,sizeof(receive));
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -149,7 +150,15 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle)
+{
+	if(UartHandle->Instance == USART1)
+	{
+		
+		HAL_UART_Transmit_IT(&huart1,send,sizeof(send));
+		HAL_UART_Receive_IT(&huart1,receive,sizeof(receive));
+	}
+}
 /* USER CODE END 4 */
 
 /**

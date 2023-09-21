@@ -1,0 +1,28 @@
+--cpu=Cortex-M4.fp.sp
+"uart_work2\startup_stm32f407xx.o"
+"uart_work2\main.o"
+"uart_work2\gpio.o"
+"uart_work2\usart.o"
+"uart_work2\stm32f4xx_it.o"
+"uart_work2\stm32f4xx_hal_msp.o"
+"uart_work2\stm32f4xx_hal_tim.o"
+"uart_work2\stm32f4xx_hal_tim_ex.o"
+"uart_work2\stm32f4xx_hal_uart.o"
+"uart_work2\stm32f4xx_hal_rcc.o"
+"uart_work2\stm32f4xx_hal_rcc_ex.o"
+"uart_work2\stm32f4xx_hal_flash.o"
+"uart_work2\stm32f4xx_hal_flash_ex.o"
+"uart_work2\stm32f4xx_hal_flash_ramfunc.o"
+"uart_work2\stm32f4xx_hal_gpio.o"
+"uart_work2\stm32f4xx_hal_dma_ex.o"
+"uart_work2\stm32f4xx_hal_dma.o"
+"uart_work2\stm32f4xx_hal_pwr.o"
+"uart_work2\stm32f4xx_hal_pwr_ex.o"
+"uart_work2\stm32f4xx_hal_cortex.o"
+"uart_work2\stm32f4xx_hal.o"
+"uart_work2\stm32f4xx_hal_exti.o"
+"uart_work2\system_stm32f4xx.o"
+--strict --scatter "UART_work2\UART_work2.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "UART_work2.map" -o UART_work2\UART_work2.axf
