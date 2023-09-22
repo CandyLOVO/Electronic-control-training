@@ -1,8 +1,8 @@
 Dependencies for Project 'Motor_Test', Target 'Motor_Test': (DO NOT MODIFY !)
 CompilerVersion: 5060960::V5.06 update 7 (build 960)::.\AC5
-F (startup_stm32f427xx.s)(0x650D4FC5)(--cpu Cortex-M4.fp.sp -g --apcs=interwork -I.\RTE\_Motor_Test-I"D:\Keil_v5\Keil5 Pack\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\Keil_v5\Keil5 Pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include"--pd "__UVISION_VERSION SETA 538" --pd "_RTE_ SETA 1" --pd "STM32F427xx SETA 1" --pd "_RTE_ SETA 1"--list startup_stm32f427xx.lst --xref -o motor_test\startup_stm32f427xx.o --depend motor_test\startup_stm32f427xx.d)
-F (../Core/Src/main.c)(0x650D5F87)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Motor_Test-I"D:\Keil_v5\Keil5 Pack\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\Keil_v5\Keil5 Pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o motor_test\main.o --omf_browse motor_test\main.crf --depend motor_test\main.d)
-I (../Core/Inc/main.h)(0x650D4FC2)
+F (startup_stm32f427xx.s)(0x650DAEB2)(--cpu Cortex-M4.fp.sp -g --apcs=interwork -I.\RTE\_Motor_Test-I"D:\Keil_v5\Keil5 Pack\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\Keil_v5\Keil5 Pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include"--pd "__UVISION_VERSION SETA 538" --pd "_RTE_ SETA 1" --pd "STM32F427xx SETA 1" --pd "_RTE_ SETA 1"--list startup_stm32f427xx.lst --xref -o motor_test\startup_stm32f427xx.o --depend motor_test\startup_stm32f427xx.d)
+F (../Core/Src/main.c)(0x650DC0AA)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Motor_Test-I"D:\Keil_v5\Keil5 Pack\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\Keil_v5\Keil5 Pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o motor_test\main.o --omf_browse motor_test\main.crf --depend motor_test\main.d)
+I (../Core/Inc/main.h)(0x650DA50E)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6464E706)
 I (../Core/Inc/stm32f4xx_hal_conf.h)(0x650D4FC2)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6464E706)
@@ -31,11 +31,11 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x6464E706)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x6464E706)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x6464E706)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x6464E706)
-I (../Core/Inc/can.h)(0x650D50BA)
+I (../Core/Inc/can.h)(0x650DC0AA)
 I (../Core/Inc/gpio.h)(0x650D4FC1)
-F (../Core/Src/gpio.c)(0x650D4FC1)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Motor_Test-I"D:\Keil_v5\Keil5 Pack\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\Keil_v5\Keil5 Pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o motor_test\gpio.o --omf_browse motor_test\gpio.crf --depend motor_test\gpio.d)
+F (../Core/Src/gpio.c)(0x650DA50D)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Motor_Test-I"D:\Keil_v5\Keil5 Pack\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\Keil_v5\Keil5 Pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o motor_test\gpio.o --omf_browse motor_test\gpio.crf --depend motor_test\gpio.d)
 I (../Core/Inc/gpio.h)(0x650D4FC1)
-I (../Core/Inc/main.h)(0x650D4FC2)
+I (../Core/Inc/main.h)(0x650DA50E)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6464E706)
 I (../Core/Inc/stm32f4xx_hal_conf.h)(0x650D4FC2)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6464E706)
@@ -64,9 +64,9 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x6464E706)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x6464E706)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x6464E706)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x6464E706)
-F (../Core/Src/can.c)(0x650D5E1A)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Motor_Test-I"D:\Keil_v5\Keil5 Pack\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\Keil_v5\Keil5 Pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o motor_test\can.o --omf_browse motor_test\can.crf --depend motor_test\can.d)
-I (../Core/Inc/can.h)(0x650D50BA)
-I (../Core/Inc/main.h)(0x650D4FC2)
+F (../Core/Src/can.c)(0x650DB258)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Motor_Test-I"D:\Keil_v5\Keil5 Pack\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\Keil_v5\Keil5 Pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o motor_test\can.o --omf_browse motor_test\can.crf --depend motor_test\can.d)
+I (../Core/Inc/can.h)(0x650DC0AA)
+I (../Core/Inc/main.h)(0x650DA50E)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6464E706)
 I (../Core/Inc/stm32f4xx_hal_conf.h)(0x650D4FC2)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6464E706)
@@ -95,8 +95,8 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x6464E706)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x6464E706)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x6464E706)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x6464E706)
-F (../Core/Src/stm32f4xx_it.c)(0x650D4FC1)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Motor_Test-I"D:\Keil_v5\Keil5 Pack\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\Keil_v5\Keil5 Pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o motor_test\stm32f4xx_it.o --omf_browse motor_test\stm32f4xx_it.crf --depend motor_test\stm32f4xx_it.d)
-I (../Core/Inc/main.h)(0x650D4FC2)
+F (../Core/Src/stm32f4xx_it.c)(0x650DAEAF)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Motor_Test-I"D:\Keil_v5\Keil5 Pack\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\Keil_v5\Keil5 Pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o motor_test\stm32f4xx_it.o --omf_browse motor_test\stm32f4xx_it.crf --depend motor_test\stm32f4xx_it.d)
+I (../Core/Inc/main.h)(0x650DA50E)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6464E706)
 I (../Core/Inc/stm32f4xx_hal_conf.h)(0x650D4FC2)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6464E706)
@@ -125,9 +125,9 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x6464E706)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x6464E706)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x6464E706)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x6464E706)
-I (../Core/Inc/stm32f4xx_it.h)(0x650D4FC2)
+I (../Core/Inc/stm32f4xx_it.h)(0x650DAEAF)
 F (../Core/Src/stm32f4xx_hal_msp.c)(0x650D4FC2)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_Motor_Test-I"D:\Keil_v5\Keil5 Pack\ARM\CMSIS\5.9.0\CMSIS\Core\Include"-I"D:\Keil_v5\Keil5 Pack\Keil\STM32F4xx_DFP\2.17.1\Drivers\CMSIS\Device\ST\STM32F4xx\Include"-D__UVISION_VERSION="538" -D_RTE_ -DSTM32F427xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F427xx-o motor_test\stm32f4xx_hal_msp.o --omf_browse motor_test\stm32f4xx_hal_msp.crf --depend motor_test\stm32f4xx_hal_msp.d)
-I (../Core/Inc/main.h)(0x650D4FC2)
+I (../Core/Inc/main.h)(0x650DA50E)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6464E706)
 I (../Core/Inc/stm32f4xx_hal_conf.h)(0x650D4FC2)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6464E706)
