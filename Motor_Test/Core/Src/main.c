@@ -88,12 +88,12 @@ int main(void)
   MX_GPIO_Init();
   MX_CAN1_Init();
   /* USER CODE BEGIN 2 */
-//	can_filter_init();
+	can_filter_init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	int torque = 1500000;//电机扭矩
+	int16_t torque = 10000;//电机扭矩
   while (1)
   {
     /* USER CODE END WHILE */
@@ -102,9 +102,9 @@ int main(void)
 //		HAL_CAN_Start(&hcan1);
 //		HAL_CAN_ActivateNotification(&hcan1,CAN_IT_RX_FIFO0_MSG_PENDING);
 //		can_cmd_send(torque,torque,torque,torque);
-		Motor_Set_Current(torque,torque,torque,torque);
+		Motor_Set_Current(torque,0,0,0);
 		HAL_GPIO_TogglePin(LED_G_GPIO_Port,LED_G_Pin);
-		HAL_Delay(1);
+		HAL_Delay(10);
   }
   /* USER CODE END 3 */
 }

@@ -175,23 +175,23 @@ void can_filter_init(void)
 //	HAL_CAN_AddTxMessage(&hcan1,&can_tx_message,can_send_data,&send_mail_box);
 //}
 
-//void can_cmd_receive()
-//{
-//	uint32_t receive_mail_box;
-//	can_rx_message.StdId = 0x202;
-//	can_rx_message.IDE = CAN_ID_STD;
-//	can_rx_message.RTR = CAN_RTR_DATA;
-//	can_rx_message.DLC = 0x08;
-//}
+void can_cmd_receive()
+{
+	uint32_t receive_mail_box;
+	can_rx_message.StdId = 0x202;
+	can_rx_message.IDE = CAN_ID_STD;
+	can_rx_message.RTR = CAN_RTR_DATA;
+	can_rx_message.DLC = 0x08;
+}
 
 void Motor_Set_Current(int16_t v1, int16_t v2, int16_t v3, int16_t v4)
 {
 	CAN_TxHeaderTypeDef tx_header;
 	uint8_t tx_data[8];
-	tx_header.StdId = 0x202;
+	tx_header.StdId = 0x203;
 	tx_header.IDE = CAN_ID_STD;
 	tx_header.RTR = CAN_RTR_DATA;
-	tx_header.DLC = 0x08;
+	tx_header.DLC = 0x02; //0x02对应一个电机 0x08对应四个电机
 	tx_data[0] = (v1>>8)&0xff;
 	tx_data[1] = (v1)&0xff;
 	tx_data[2] = (v2>>8)&0xff;
