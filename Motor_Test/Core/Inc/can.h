@@ -38,7 +38,7 @@ extern CAN_HandleTypeDef hcan1;
 //void can_filter_init(void);
 void can_cmd_receive();
 void can_cmd_send(int motor1,int motor2,int motor3,int motor4);
-void Motor_Set_Current(int id_range, int16_t v1, int16_t v2, int16_t v3, int16_t v4);
+void Motor_Set_Current(int16_t v1, int16_t v2, int16_t v3, int16_t v4);
 /* USER CODE END Private defines */
 
 void MX_CAN1_Init(void);
