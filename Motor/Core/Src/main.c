@@ -88,15 +88,15 @@ int main(void)
   MX_GPIO_Init();
   MX_CAN1_Init();
   /* USER CODE BEGIN 2 */
-	pidTypeDef PID;
-	float Kp;
-	float Ki;
-	float Kd;
-	float get;
-	float set = 400;
-	float Max_out;
-	float Max_iout;
-	float speed;
+	pidTypeDef PID[4];
+	float Kp = 30;
+	float Ki = 0.5;
+	float Kd = 10;
+	float set = 500;
+	float Max_out = 700;
+	float Max_iout = 700;
+	float speed[4];
+	moto_info motor[4]; //电机信息
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -106,9 +106,11 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		pid_init(&PID,Kp,Ki,Kd);
-		speed = pid_cal(&PID,get,set,Max_out,Max_iout);
-		can_cmd_send(0,0,speed,0);
+		for(int i=0;i<4;i++){
+			pid_init(&PID[i],Kp,Ki,Kd);
+			speed[i] = pid_cal(&PID[i],motor[i].rotor_speed,set,Max_out,Max_iout);
+		}
+		can_cmd_send(speed[0],speed[1],speed[2],speed[3]);
 		HAL_Delay(100);
   }
   /* USER CODE END 3 */
