@@ -31,3 +31,4 @@ motor\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 motor\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 motor\main.o: ../Core/Inc/can.h
 motor\main.o: ../Core/Inc/gpio.h
+motor\main.o: ../Core/Inc/pid.h

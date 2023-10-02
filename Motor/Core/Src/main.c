@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "pid.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -88,7 +88,15 @@ int main(void)
   MX_GPIO_Init();
   MX_CAN1_Init();
   /* USER CODE BEGIN 2 */
-
+	pidTypeDef PID;
+	float Kp;
+	float Ki;
+	float Kd;
+	float get;
+	float set = 400;
+	float Max_out;
+	float Max_iout;
+	float speed;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -98,7 +106,9 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		can_cmd_send(1500,1500,1500,1500);
+		pid_init(&PID,Kp,Ki,Kd);
+		speed = pid_cal(&PID,get,set,Max_out,Max_iout);
+		can_cmd_send(0,0,speed,0);
 		HAL_Delay(100);
   }
   /* USER CODE END 3 */

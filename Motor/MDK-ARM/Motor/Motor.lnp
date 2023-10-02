@@ -5,6 +5,7 @@
 "motor\can.o"
 "motor\stm32f4xx_it.o"
 "motor\stm32f4xx_hal_msp.o"
+"motor\pid.o"
 "motor\stm32f4xx_hal_can.o"
 "motor\stm32f4xx_hal_rcc.o"
 "motor\stm32f4xx_hal_rcc_ex.o"

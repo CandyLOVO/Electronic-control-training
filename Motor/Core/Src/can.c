@@ -72,20 +72,20 @@ void MX_CAN1_Init(void)
 	
     CAN_FilterTypeDef  can_filter;
 
-    can_filter.FilterBank = 0;                       // filter 0
-    can_filter.FilterMode =  CAN_FILTERMODE_IDMASK;  // 标识符屏蔽位模式
-    can_filter.FilterScale = CAN_FILTERSCALE_32BIT;		//过滤器位宽为单个32使
-    can_filter.FilterIdHigh = 0;//标识符寄存器 
-    can_filter.FilterIdLow  = 0;//标识符寄存器 
-    can_filter.FilterMaskIdHigh = 0;//屏蔽寄存噿
-    can_filter.FilterMaskIdLow  = 0;       //屏蔽寄存噿   set mask 0 to receive all can id
-    can_filter.FilterFIFOAssignment = CAN_RX_FIFO0; // assign to fifo0，接收器是FIFO0
-//    can_filter.FilterActivation = ENABLE;           // enable can filter
+    can_filter.FilterBank = 14;
+    can_filter.FilterMode =  CAN_FILTERMODE_IDMASK;
+    can_filter.FilterScale = CAN_FILTERSCALE_32BIT;
+    can_filter.FilterIdHigh = 0; 
+    can_filter.FilterIdLow  = 0; 
+    can_filter.FilterMaskIdHigh = 0;
+    can_filter.FilterMaskIdLow  = 0;
+    can_filter.FilterFIFOAssignment = CAN_RX_FIFO0;
+    can_filter.FilterActivation = ENABLE;
     can_filter.SlaveStartFilterBank  = 14;          
    
-    HAL_CAN_ConfigFilter(&hcan1, &can_filter);        // init can filter
-    HAL_CAN_ActivateNotification(&hcan1,CAN_IT_RX_FIFO0_MSG_PENDING);		//使能can的FIFO0中断
-    HAL_CAN_Start(&hcan1);//启动can1
+    HAL_CAN_ConfigFilter(&hcan1, &can_filter);
+    HAL_CAN_ActivateNotification(&hcan1,CAN_IT_RX_FIFO0_MSG_PENDING);
+    HAL_CAN_Start(&hcan1);
   /* USER CODE END CAN1_Init 2 */
 
 }
