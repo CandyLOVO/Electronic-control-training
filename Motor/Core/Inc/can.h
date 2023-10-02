@@ -35,6 +35,13 @@ extern "C" {
 extern CAN_HandleTypeDef hcan1;
 
 /* USER CODE BEGIN Private defines */
+typedef struct
+{
+	uint16_t rotor_angle;
+	uint16_t rotor_speed;
+	uint16_t torque_current;
+	uint16_t tempertue;
+}moto_info;
 void can_cmd_send(int motor1,int motor2,int motor3,int motor4);
 /* USER CODE END Private defines */
 

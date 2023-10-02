@@ -22,8 +22,10 @@
 
 /* USER CODE BEGIN 0 */
 static CAN_TxHeaderTypeDef can_tx_message;
-static CAN_TxHeaderTypeDef can_rx_message;
+static CAN_RxHeaderTypeDef can_rx_message;
 static uint8_t can_send_data[8];
+static uint8_t can_receive_data[8];
+static moto_info moto[4];
 /* USER CODE END 0 */
 
 CAN_HandleTypeDef hcan1;
@@ -165,5 +167,17 @@ void can_cmd_send(int motor1,int motor2,int motor3,int motor4)
 	can_send_data[6] = (motor4>>8)&0xff;
 	can_send_data[7] = motor4&0xff;
 	HAL_CAN_AddTxMessage(&hcan1,&can_tx_message,can_send_data,&send_mail_box);
+}
+
+void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) //中断接收数据
+{
+	HAL_CAN_GetRxMessage(&hcan1,CAN_RX_FIFO0,&can_rx_message,can_receive_data);
+	if((can_rx_message.StdId >= 0x201) && (can_rx_message.StdId < 0x208)){
+		uint8_t index = can_rx_message.StdId - 0x201;
+		moto[index].rotor_angle = ((can_receive_data[0] << 8) | can_receive_data[1]);
+		moto[index].rotor_speed = ((can_receive_data[2] << 8) | can_receive_data[3]);
+		moto[index].torque_current = ((can_receive_data[4] << 8) | can_receive_data[5]);
+		moto[index].tempertue = can_receive_data[6];
+	}
 }
 /* USER CODE END 1 */
